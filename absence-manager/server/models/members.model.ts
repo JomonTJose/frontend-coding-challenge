@@ -6,7 +6,7 @@ const membersSchema = new mongoose.Schema({
   image: String,
   name: String,
   userId: Number,
-})
+});
 
 const MembersModel = mongoose.model("Members", membersSchema);
 export default MembersModel;

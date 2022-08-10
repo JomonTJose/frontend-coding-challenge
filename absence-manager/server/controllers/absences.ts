@@ -1,4 +1,4 @@
-import Absences from "../models/absences.model"
+import Absences from "../models/absences.model";
 
 //get All Absences
 export const absences = async (req: any, res: any) => {
@@ -12,10 +12,10 @@ export const absences = async (req: any, res: any) => {
           as: "memInfo",
         },
       },
-    ])
-    res.status(200).json(absencesRes)
+    ]);
+    res.status(200).json(absencesRes);
   } catch (error: any) {
-    console.log(error)
-    res.status(200).json(error)
+    console.log(error);
+    res.status(200).json(error);
   }
-}
+};
