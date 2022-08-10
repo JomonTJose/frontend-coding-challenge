@@ -7,18 +7,12 @@ import { DisplayColumnns, Columns } from '../models/absences.model'
 import ErrorComponent from './ErrorComponent'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const numberofRowsPerPage: number[] = [10]
-
-const customFilterWrapper = {
-  display: `flex`,
-  alignItems: `center`,
-  marginLeft: `50px`,
-}
-
-const displayFlex = {
-  display: `flex`,
-}
 
 const AbsenceManager = () => {
   const [absencesList, setabsencesList] = useState<DisplayColumnns[]>([])
@@ -27,8 +21,8 @@ const AbsenceManager = () => {
   const [filteredAbsenceList, setFilteredAbsenceList] = useState<DisplayColumnns[]>([])
   const [error, setError] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null])
+  const [startDate, endDate] = dateRange
 
   const fetchAbsencesList = () => {
     setLoading(true)
@@ -47,7 +41,7 @@ const AbsenceManager = () => {
             }
             let startDate = moment(item.startDate)
             let endDate = moment(item.endDate)
-            let period = endDate.diff(startDate, 'days')
+            let period = endDate.diff(startDate, 'days') + 1
             dispayData.push({
               AbsenceType: item.type,
               MemberName: item.memInfo[0].name,
@@ -55,8 +49,8 @@ const AbsenceManager = () => {
               Status: status,
               AdmitterNote: item.admitterNote,
               MemberNote: item.memberNote,
-              EndDate: moment(item.endDate).format('DD-MM-YYYY'),
-              StartDate: moment(item.startDate).format('DD-MM-YYYY'),
+              EndDate: item.endDate,
+              StartDate: item.startDate,
             })
           })
           setabsencesList(dispayData)
@@ -125,13 +119,35 @@ const AbsenceManager = () => {
         Status: item.Status,
         AdmitterNote: item.AdmitterNote,
         MemberNote: item.MemberNote,
-        EndDate: moment(item.endDate).format('DD-MM-YYYY'),
-        StartDate: moment(item.startDate).format('DD-MM-YYYY'),
+        EndDate: item.EndDate,
+        StartDate: item.StartDate,
       })
     })
     setFilteredAbsenceList(filteredList)
   }
-
+  const dateFilterValueChanged = (event: any) => {
+    if (event[0] && event[1]) {
+      var list = absencesList.filter(
+        (abs) =>
+          new Date(abs.StartDate) >= new Date(event[0]) &&
+          new Date(abs.EndDate) <= new Date(event[1])
+      )
+      var filteredList: DisplayColumnns[] = []
+      list.forEach((item: any, index) => {
+        filteredList.push({
+          AbsenceType: item.AbsenceType,
+          MemberName: item.MemberName,
+          Period: item.Period,
+          Status: item.Status,
+          AdmitterNote: item.AdmitterNote,
+          MemberNote: item.MemberNote,
+          EndDate: item.EndDate,
+          StartDate: item.StartDate,
+        })
+      })
+      setFilteredAbsenceList(filteredList)
+    }
+  }
   return (
     <div data-testid="AbsenceManager" className="AbsenceManager">
       {loading ? (
@@ -142,44 +158,72 @@ const AbsenceManager = () => {
             <ErrorComponent errorMessage={errorMessage} />
           ) : (
             <>
-              <header>Absence Manager</header>
-              <p>Total Number of Absences ({absencesList.length})</p>
-              <form>
-                <h5 style={displayFlex}>Filters</h5>
-                <div className="form-group" style={customFilterWrapper}>
-                  <label>
-                    Type
-                    <select
-                      data-testid="selectLeaveType"
-                      value={filterDropdownValue}
-                      onChange={dropDownValueChanged}
-                      style={{ marginLeft: '0.5em' }}
-                    >
-                      <option value="">All</option>
-                      <option value="vacation">Vacation</option>
-                      <option value="sickness">Sickness</option>
-                    </select>
-                  </label>
-                  <div>
+              <Container fluid>
+                <Row className="justify-content-md-center">
+                  <Col md="auto">Absence Manager</Col>
+                </Row>
+                <Row className="justify-content-md-center">
+                  <Col md="auto">Total Number of Absences ({absencesList.length})</Col>
+                </Row>
+                <Row>
+                  <Col md="auto">&nbsp;</Col>
+                </Row>
+                <Row className="">
+                  <Col md={1}>Filters</Col>
+                  <Col md={3}>
+                    <label>
+                      Type
+                      <select
+                        data-testid="selectLeaveType"
+                        value={filterDropdownValue}
+                        onChange={dropDownValueChanged}
+                        style={{ marginLeft: '0.5em' }}
+                      >
+                        <option value="">All</option>
+                        <option value="vacation">Vacation</option>
+                        <option value="sickness">Sickness</option>
+                      </select>
+                    </label>
+                  </Col>
+                  <Col md={1}>
+                    <label>Date Range</label>
+                  </Col>
+                  <Col md={3}>
                     <DatePicker
-                      selected={startDate}
-                      onChange={(date: any) => setStartDate(date)}
+                      selectsRange={true}
+                      startDate={startDate}
+                      endDate={endDate}
+                      onChange={(update) => {
+                        setDateRange(update)
+                        dateFilterValueChanged(update)
+                      }}
+                      isClearable={true}
                       name="startDate"
-                      dateFormat="MM/dd/yyyy"
+                      dateFormat="yyyy/MM/dd"
                     />
-                    <button className="btn btn-primary">Show Date</button>
-                  </div>
-                </div>
-              </form>
-              <DataTable
-                columns={Columns}
-                data={filteredAbsenceList.length > 0 ? filteredAbsenceList : absencesList}
-                defaultSortFieldId={1}
-                paginationRowsPerPageOptions={numberofRowsPerPage}
-                pagination
-                conditionalRowStyles={conditionalRowStyles}
-                persistTableHead
-              />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col md="auto">&nbsp;</Col>
+                </Row>
+                <Row>
+                  <Col lg={12}>
+                    <DataTable
+                      columns={Columns}
+                      data={
+                        filterDropdownValue || (endDate && startDate)
+                          ? filteredAbsenceList
+                          : absencesList
+                      }
+                      defaultSortFieldId={1}
+                      paginationRowsPerPageOptions={numberofRowsPerPage}
+                      pagination
+                      conditionalRowStyles={conditionalRowStyles}
+                      persistTableHead
+                    />
+                  </Col>
+                </Row>
+              </Container>
             </>
           )}
         </div>
