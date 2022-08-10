@@ -28,7 +28,6 @@ mongoose
   } as ConnectionOptions)
   .then((res: any) => {
     app.listen(Port, () => {
-      console.log(res);
       console.log(`Server is running on ${Port}`);
     });
   })
