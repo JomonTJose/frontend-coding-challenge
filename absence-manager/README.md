@@ -1,16 +1,16 @@
 ## Instructions
 
-Navigate to Server and Client folders__
-Open terminal in Server folder__
-    Run `npm i`__
-Open terminal in Client folder__
-    Run `npm i`__
-Run `npm start` in both Server and Client terminals__
-Server runs at http://localhost:3001__
-Client runs at http://localhost:3000__
-NodeJs API Connects to Personal MongoDb Cluster in Cloud (MongoDB) for retrieving data__
-In Client terminal, __
-    Run `npm test` to run UI Unit tests__
+Navigate to Server and Client folders  
+Open terminal in Server folder  
+    Run `npm i`  
+Open terminal in Client folder  
+    Run `npm i`  
+Run `npm start` in both Server and Client terminals  
+Server runs at http://localhost:3001  
+Client runs at http://localhost:3000  
+NodeJs API Connects to Personal MongoDb Cluster in Cloud (MongoDB) for retrieving data  
+In Client terminal,   
+    Run `npm test` to run UI Unit tests  
 
 <p align="center">
   <img src="https://crewmeister.com/images/logo_crewmeister_without_text.svg" />
