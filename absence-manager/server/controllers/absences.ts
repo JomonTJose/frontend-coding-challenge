@@ -13,8 +13,6 @@ export const absences = async (req: any, res: any) => {
         },
       },
     ])
-
-    console.log(absencesRes)
     res.status(200).json(absencesRes)
   } catch (error: any) {
     console.log(error)
