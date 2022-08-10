@@ -1,16 +1,16 @@
 ## Instructions
 
--- Navigate to Server and Client folders
--- Open terminal in Server folder
-    -- Run `npm i`
--- Open terminal in Client folder
-    -- Run `npm i`
--- Run `npm start` in both Server and Client terminals
--- Server runs at http://localhost:3001
--- Client runs at http://localhost:3000
--- NodeJs API Connects to Personal MongoDb Cluster in Cloud (MongoDB) for retrieving data
--- In Client terminal, 
-    -- Run `npm test` to run UI Unit tests
+Navigate to Server and Client folders
+Open terminal in Server folder
+    Run `npm i`
+Open terminal in Client folder
+    Run `npm i`
+Run `npm start` in both Server and Client terminals
+Server runs at http://localhost:3001
+Client runs at http://localhost:3000
+NodeJs API Connects to Personal MongoDb Cluster in Cloud (MongoDB) for retrieving data
+In Client terminal, 
+    Run `npm test` to run UI Unit tests
 
 <p align="center">
   <img src="https://crewmeister.com/images/logo_crewmeister_without_text.svg" />
@@ -63,10 +63,10 @@ Optional: build the project and deploy (ie make it available as a static project
 
 ## Tech Requirements
 
--[X] React
--[X] Tests: Jest + react-testing-library / enzyme
--[X] Code Linter
+- [X] React
+- [X] Tests: Jest + react-testing-library / enzyme
+- [X] Code Linter
 - Redux is a plus.
--[X] Typescript is a plus.
--[X] CSSinJS is a plus: styled-components, styled-system, ...
+- [X] Typescript is a plus.
+- [X] CSSinJS is a plus: styled-components, styled-system, ...
 
