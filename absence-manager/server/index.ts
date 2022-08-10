@@ -2,9 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import routes from "./routes";
-import mongoose, { MongooseOptions } from "mongoose";
+import mongoose from "mongoose";
 import { ConnectionOptions } from "tls";
-import swaggerUi from "swagger-ui-express";
 
 const app = express();
 const Port = 3001;
@@ -18,15 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 // configure the app to use our routs
 app.use("/api/v1", routes);
-// app.use(
-//   "/docs",
-//   swaggerUi.serve,
-//   swaggerUi.setup(undefined, {
-//     swaggerOptions: {
-//       url: "/swagger.json",
-//     },
-//   })
-// );
 
 const MONGODB_CONNECTION_URL =
   "mongodb+srv://jomontjose:test1234@cluster0.y5jwwye.mongodb.net/absences_manager?retryWrites=true&w=majority";

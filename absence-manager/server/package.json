@@ -19,8 +19,6 @@
     "mongodb": "^4.8.1",
     "mongoose": "^6.5.1",
     "nodemon": "^2.0.19",
-    "swagger-express-ts": "^1.1.0",
-    "swagger-ui-express": "^4.5.0",
     "tsoa": "^4.1.1"
   },
   "devDependencies": {
